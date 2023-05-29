@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sentiment Analysis</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Sentiment Analysis</h1>
+    <form id="analysis-form">
+        <label for="inputText">Enter Text:</label><br>
+        <input type="text" id="inputText" name="inputText"><br>
+        <input type="submit" value="Analyze">
+    </form>
+    <p id="result"></p>
+    <br>
+    <button id="greetButton">Greet User</button>
+    <p id="greetResult"></p>
+
+    <script>
+    $(document).ready(function() {
+        $("#analysis-form").on("submit", function(event) {
+            event.preventDefault();
+            analyzeSentiment($("#inputText").val());
+        });
+
+        $("#greetButton").on("click", function() {
+            greetUser();
+        });
+    });
+
+    function analyzeSentiment(text) {
+        fetch('/analyze?text=' + encodeURIComponent(text))
+            .then(response => response.text())
+            .then(data => {
+                $("#result").html(data);
+            })
+            .catch(error => {
+                console.error('An error occurred:', error);
+                $("#result").html('An error occurred');
+            });
+    }
+
+    function greetUser() {
+        fetch('/greet')
+            .then(response => response.text())
+            .then(data => {
+                $("#greetResult").html(data);
+            })
+            .catch(error => {
+                console.error('An error occurred:', error);
+                $("#greetResult").html('An error occurred');
+            });
+    }
+    </script>
+</body>
+</html>
