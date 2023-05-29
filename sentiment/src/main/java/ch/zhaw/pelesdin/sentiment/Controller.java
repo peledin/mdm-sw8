@@ -30,4 +30,10 @@ public class Controller {
         String greeting = "Hello! The current time is: " + currentTime;
         return greeting;
     }
+
+    @GetMapping("/ping")
+    @ResponseBody
+    public String ping() {
+        return "Sentiment Analysis is running!";
+    }
 }
